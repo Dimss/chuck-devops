@@ -54,17 +54,17 @@ oc get istag -n chuck | grep chuck-ui  | awk '{print $1}' | xargs oc delete ista
 ### Pipeline build strategy
 ```bash
 # Deploy Jenkins
-oc get templates jenkins-ephemeral -n openshift  -o yaml | oc process -pENABLE_OAUTH=false -f -  | oc create  -f - -n chuck-ops
+ oc get templates jenkins-ephemeral -n openshift  -o yaml | oc process -pENABLE_OAUTH=false -pMEMORY_LIMIT=2048Mi -f -  | oc create  -f - -n chuck-ops
 # Login to Jenkins: admin/password
 https://jenkins-chuck-ops.router.default.svc.cluster.local:9443/login
 # Create DC
 oc create -f https://raw.githubusercontent.com/Dimss/chuck-devops/master/ci/pipeline/bc.yaml
 # Start build from Jenkins UI and from CLI
 oc start-build chuck-ui-pipeline -F
-# Cleanup Jenkins
-oc get templates jenkins-ephemeral -n openshift  -o yaml | oc process -pENABLE_OAUTH=false -f -  | oc delete -f - -n chuck-ops
 # Cleanup BC 
 oc delete -f https://raw.githubusercontent.com/Dimss/chuck-devops/master/ci/pipeline/bc.yaml
+# Cleanup Jenkins
+oc get templates jenkins-ephemeral -n openshift  -o yaml | oc process -pENABLE_OAUTH=false -pMEMORY_LIMIT=2048Mi -f -  | oc delete  -f - -n chuck-ops
 ```
 
 
