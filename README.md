@@ -29,7 +29,11 @@ oc get is | grep chuck-ui
 
 ### S2I build strategy
 ```bash
+# Create BC
 oc create -f https://raw.githubusercontent.com/Dimss/chuck-devops/master/ci/s2i/bc.yaml
+# Start build
+oc start-build chuck-ui -F
+
 ```
 
 
