@@ -60,7 +60,11 @@ https://jenkins-chuck-ops.router.default.svc.cluster.local:9443/login
 # Create DC
 oc create -f https://raw.githubusercontent.com/Dimss/chuck-devops/master/ci/pipeline/bc.yaml
 # Start build from Jenkins UI and from CLI
-
+oc start-build chuck-ui-pipeline -F
+# Cleanup Jenkins
+oc get templates jenkins-ephemeral -n openshift  -o yaml | oc process -pENABLE_OAUTH=false -f -  | oc delete -f - -n chuck-ops
+# Cleanup BC 
+oc delete -f https://raw.githubusercontent.com/Dimss/chuck-devops/master/ci/pipeline/bc.yaml
 ```
 
 
