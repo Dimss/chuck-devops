@@ -17,3 +17,7 @@ spec:
       - secretSource:
           name: "builder-config"
         mountPath: "/tmp/builder-config"
+  triggers:
+  - github:
+      secret: dGvu1slX2WybtV_HOcYJ
+    type: "GitHub"
