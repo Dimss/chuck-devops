@@ -34,7 +34,7 @@ oc create -f https://raw.githubusercontent.com/Dimss/chuck-devops/master/ci/s2i/
 # Start build
 oc start-build chuck-ui -F
 # Cleanup - delete BC
-oc delete bc chuck-u
+oc delete -f https://raw.githubusercontent.com/Dimss/chuck-devops/master/ci/s2i/bc.yaml
 # Cleanup - delete istag
 oc delete istag chuck-ui:latest -n chuck
 ```
@@ -50,7 +50,7 @@ oc start-build chuck-ui-custom -F
 # Cleanup istags 
 oc get istag -n chuck | grep chuck-ui  | awk '{print $1}' | xargs oc delete istag -n chuck
 # Cleanup BC 
-oc delete bc chuck-ui-custom -n chuck-ops
+oc delete -f https://raw.githubusercontent.com/Dimss/chuck-devops/master/ci/custom/bc.yaml
 
 ```
 
