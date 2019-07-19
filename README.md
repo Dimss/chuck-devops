@@ -6,8 +6,6 @@
 oc new-project chuck
 # DevOps project 
 oc new-project chuck-ops
-# Deploy Jenkins
-oc get templates jenkins-ephemeral -n openshift  -o yaml | oc process -pENABLE_OAUTH=false -f -  | oc create  -f - -n chuck-ops
 # Allow builder user to push IS in chuck project
 oc policy add-role-to-user system:image-pusher system:serviceaccount:chuck-ops:builder --namespace=chuck
 # Create IS for Chuck-UI
@@ -47,8 +45,22 @@ oc delete istag chuck-ui:latest -n chuck
 oc create -f https://raw.githubusercontent.com/Dimss/chuck-devops/master/ci/custom/secret.yaml
 # Create BC 
 oc create -f https://raw.githubusercontent.com/Dimss/chuck-devops/master/ci/custom/bc.yaml
+# Start Build
+oc start-build chuck-ui-custom -F
+# Cleanup
+oc get istag -n chuck | grep chuck-ui  | awk '{print $1}' | xargs oc delete istag -n chuck
 ```
 
+### Pipeline build strategy
+```bash
+# Deploy Jenkins
+oc get templates jenkins-ephemeral -n openshift  -o yaml | oc process -pENABLE_OAUTH=false -f -  | oc create  -f - -n chuck-ops
+# Login to Jenkins: admin/password
+https://jenkins-chuck-ops.router.default.svc.cluster.local:9443/login
+# Create DC
+oc create -f https://raw.githubusercontent.com/Dimss/chuck-devops/master/ci/pipeline/bc.yaml
+# Start build from Jenkins UI and from CLI
 
+```
 
 
