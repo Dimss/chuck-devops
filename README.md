@@ -13,7 +13,7 @@ oc create -f https://raw.githubusercontent.com/Dimss/chuck-devops/master/ci/is.y
 # Create DC for API service
 oc create -f https://raw.githubusercontent.com/Dimss/chuck-api/master/ocp/cd.yaml
 # Create DC for UI service
-oc create -f https://github.com/Dimss/chuck-ui/blob/master/ocp/cd.yaml
+oc create -f https://raw.githubusercontent.com/Dimss/chuck-ui/master/ocp/cd.yaml
 ```
 
 
