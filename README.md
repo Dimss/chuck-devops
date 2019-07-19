@@ -3,9 +3,9 @@
 ### Setup environment
 ```bash
 # Application project 
-oc create -f chuck
+oc new-project chuck
 # DevOps project 
-oc create -t chuck-ops
+oc new-project chuck-ops
 # Allow builder user to push IS in chuck project
 oc policy add-role-to-user system:image-pusher system:serviceaccount:chuck-ops:builder --namespace=chuck
 # Create IS for Chuck-UI
