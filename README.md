@@ -16,6 +16,16 @@ oc create -f https://raw.githubusercontent.com/Dimss/chuck-api/master/ocp/cd.yam
 oc create -f https://raw.githubusercontent.com/Dimss/chuck-ui/master/ocp/cd.yaml
 ```
 
+### Verify resources 
+```bash
+# Make sure API is running
+oc get pods | grep chuck-api
+# Exec request to API server
+curl http://127.0.0.1:30081/v1/joke 
+# Make sure IS for chuck-ui is exists
+oc get is | grep chuck-ui
+```
+
 
 ### S2I build strategy
 ```bash
