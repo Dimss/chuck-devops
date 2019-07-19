@@ -47,6 +47,8 @@ oc create -f https://raw.githubusercontent.com/Dimss/chuck-devops/master/ci/cust
 oc create -f https://raw.githubusercontent.com/Dimss/chuck-devops/master/ci/custom/bc.yaml
 # Start Build
 oc start-build chuck-ui-custom -F
+# Start ngrock for webhook test and update webhook url 
+ngrok tcp 8443
 # Cleanup istags 
 oc get istag -n chuck | grep chuck-ui  | awk '{print $1}' | xargs oc delete istag -n chuck
 # Cleanup BC 
