@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: "chuck-ui"
+spec:
+  selector:
+    app: "chuck-ui"
+  type: NodePort
+  ports:
+  - name: http
+    port: 3000
+    targetPort: 3000
+    nodePort: 30080
+---
+kind: DeploymentConfig
+apiVersion: "v1"
+metadata:
+  labels:
+    app: "chuck-ui"
+  name: "chuck-ui"
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: "chuck-ui"
+    spec:
+      containers:
+      - name: "chuck-ui"
+        image: " "
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3000
+        env:
+        - name: API_URL
+          value: "http://127.0.0.1:30081"
+  triggers:
+    - type: "ConfigChange"
+    - type: "ImageChange"
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - "chuck-ui"
+        from:
+          kind: "ImageStreamTag"
+          name: "chuck-ui:latest"
+          namespace: "chuck"

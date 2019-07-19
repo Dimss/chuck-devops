@@ -1,0 +1,1 @@
+oc get templates jenkins-ephemeral -n openshift  -o yaml | oc process -pENABLE_OAUTH=false -f -  | oc create  -f -

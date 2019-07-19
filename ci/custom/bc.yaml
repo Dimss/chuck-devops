@@ -1,0 +1,19 @@
+kind: "BuildConfig"
+apiVersion: "v1"
+metadata:
+  name: "chuck-ui-custom"
+  namespace: chuck-ops
+spec:
+  runPolicy: "Serial"
+  source:
+    git:
+      uri: "https://github.com/Dimss/chuck-ui"
+  strategy:
+    customStrategy:
+      from:
+        kind: "DockerImage"
+        name: "dimssss/custom-builder:28"
+      secrets:
+      - secretSource:
+          name: "builder-config"
+        mountPath: "/tmp/builder-config"
